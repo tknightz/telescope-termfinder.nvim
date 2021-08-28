@@ -24,7 +24,7 @@ require('telescope').load_extension("termfinder")
 # Usage
 
 ```
-:Telescope termfinder
+:Telescope termfinder find
 ```
 
 
