@@ -11,6 +11,7 @@ end
 return telescope.register_extension{
     setup = main.setup,
     exports = {
-        termfinder = main.termfinder
+        termfinder = main.termfinder,
+        find = main.termfinder
     }
 }
