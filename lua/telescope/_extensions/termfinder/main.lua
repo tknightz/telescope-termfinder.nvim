@@ -11,9 +11,19 @@ local _actions = require('telescope._extensions.termfinder.actions')
 
 local M = {}
 
+local config = {
+    mappings = {
+        rename_term = '<C-n>',
+        delete_term = '<C-x>',
+        vertical_term = '<C-v>',
+        horizontal_term = '<C-h>',
+        float_term = '<C-f>'
+    }
+}
+
 M.setup = function(opts)
     if opts then
-        config = vim.tbl_extend("force", conf, opts)
+        config = vim.tbl_deep_extend("force", config, opts)
     end
 end
 
@@ -38,11 +48,11 @@ M.termfinder = function(opts)
             _actions.rename_term:enhance({ post = refresh_terms })
             _actions.delete_term:enhance({ post = refresh_terms })
 
-            map('i', '<c-n>', _actions.rename_term)
-            map('i', '<c-x>', _actions.delete_term)
-            map('i', '<c-v>', _actions.open_term_vertical)
-            map('i', '<c-h>', _actions.open_term_horizontal)
-            map('i', '<c-f>', _actions.open_term_float)
+            map('i', config.mappings.rename_term, _actions.rename_term)
+            map('i', config.mappings.delete_term, _actions.delete_term)
+            map('i', config.mappings.vertical_term, _actions.open_term_vertical)
+            map('i', config.mappings.horizontal_term, _actions.open_term_horizontal)
+            map('i', config.mappings.float_term, _actions.open_term_float)
 
             actions.select_default:replace(on_term_selected)
             return true

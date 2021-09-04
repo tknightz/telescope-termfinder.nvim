@@ -37,3 +37,19 @@ require('telescope').load_extension("termfinder")
 |`<C-h>` | Change direction to horizontal|
 |`<C-v>` | Change direction to vertical|
 |`<C-f>` | Change direction to float|
+
+# Custom mappings
+```lua
+-- in telescope's config file.
+extensions = {
+    termfinder = {
+        mappings = {
+            rename_term = '<C-n>',
+            delete_term = '<C-x>',
+            vertical_term = '<C-v>',
+            horizontal_term = '<C-h>',
+            float_term = '<C-f>'
+        }
+    }
+}
+```
