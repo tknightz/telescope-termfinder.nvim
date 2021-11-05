@@ -33,7 +33,7 @@ M.termfinder = function(opts)
         results_title = "Terms",
         sorter = conf.file_sorter(opts),
         finder = _finder.term_finder(opts, _util.get_terms()),
-        previewer = previewers.display_content.new(opts),
+        previewer = conf.grep_previewer(opts),
         attach_mappings = function(prompt_bufnr, map)
             local on_term_selected = function()
                 _actions.select_term(prompt_bufnr)
