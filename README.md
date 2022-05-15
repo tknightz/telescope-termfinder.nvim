@@ -32,7 +32,7 @@ require('telescope').load_extension("termfinder")
 
 |Keys| Action|
 |---|---|
-|`<C-n>` | Rename terminal|
+|`<C-r>` | Rename terminal|
 |`<C-x>` | Delete terminal|
 |`<C-h>` | Change direction to horizontal|
 |`<C-v>` | Change direction to vertical|

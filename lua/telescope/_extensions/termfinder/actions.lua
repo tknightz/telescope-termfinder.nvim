@@ -43,9 +43,11 @@ end
 M.rename_term = function(prompt_bufnr)
     local entry = action_state.get_selected_entry()
     local new_name = vim.fn.input('Rename to: ')
-    
-    vim.api.nvim_buf_set_name(entry.bufnr, new_name)
-    terminal.get(entry.id).name = new_name
+
+    if new_name ~= "" then
+      vim.api.nvim_buf_set_name(entry.bufnr, new_name)
+      terminal.get(entry.id).name = new_name
+    end
 end
 
 M.delete_term = function(prompt_bufnr)

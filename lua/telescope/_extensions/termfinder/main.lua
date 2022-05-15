@@ -13,7 +13,7 @@ local M = {}
 
 local config = {
     mappings = {
-        rename_term = '<C-n>',
+        rename_term = '<C-r>',
         delete_term = '<C-x>',
         vertical_term = '<C-v>',
         horizontal_term = '<C-h>',
