@@ -53,8 +53,9 @@ M.termfinder = function(opts)
             map('i', config.mappings.vertical_term, _actions.open_term_vertical)
             map('i', config.mappings.horizontal_term, _actions.open_term_horizontal)
             map('i', config.mappings.float_term, _actions.open_term_float)
+            map('i', '<CR>', _actions.select_term)
 
-            actions.select_default:replace(on_term_selected)
+            -- actions.select_default:replace(on_term_selected)
             return true
         end,
     }):find()
