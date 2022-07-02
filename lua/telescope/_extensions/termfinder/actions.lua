@@ -10,7 +10,7 @@ local M = {}
 
 local function open_term(prompt_bufnr, direction)
     local entry = action_state.get_selected_entry()
-    if not entry then
+    if entry.id then
         return
     end
 
@@ -26,7 +26,7 @@ end
 
 M.select_term = function(prompt_bufnr)
     local entry = action_state.get_selected_entry()
-    if not entry then
+    if entry.id == nil then
         return
     end
     actions.close(prompt_bufnr)
