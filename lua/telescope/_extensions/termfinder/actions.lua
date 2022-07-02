@@ -32,6 +32,10 @@ M.select_term = function(prompt_bufnr)
     actions.close(prompt_bufnr)
 
     local term = terminal.get(entry.id)
+    if term == nil then
+      return
+    end
+
     if term:is_open() then
         vim.api.nvim_set_current_win(term.window)
     else
