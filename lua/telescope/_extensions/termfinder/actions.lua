@@ -10,21 +10,18 @@ local M = {}
 
 local function open_term(prompt_bufnr, direction)
     local entry = action_state.get_selected_entry()
-    if entry.id then
+    if entry.id == nil then
         return
     end
 
     local term = terminal.get(entry.id)
-    --[[ if term:is_open() then
-        term:close()
-    end ]]
     if vim.api.nvim_win_is_valid(term.window) then
         vim.api.nvim_win_hide(term.window)
     end
     term:change_direction(direction)
 end
 
-M.select_term = function(prompt_bufnr)
+M.select_term = function(prompt_bufnr, start_to_insert)
     local entry = action_state.get_selected_entry()
     if entry.id == nil then
         return
@@ -42,6 +39,9 @@ M.select_term = function(prompt_bufnr)
         -- toggleterm.toggle_all('close')
         term:open()
     end
+    if start_to_insert then
+      vim.api.nvim_input("i")
+    end
 end
 
 M.rename_term = function(prompt_bufnr)
@@ -56,7 +56,8 @@ end
 
 M.delete_term = function(prompt_bufnr)
     local term_id = action_state.get_selected_entry().id
-    terminal.delete(term_id)
+    local term = terminal.get(term_id)
+    term:shutdown()
 end
 
 M.open_term_vertical = function(prompt_bufnr)

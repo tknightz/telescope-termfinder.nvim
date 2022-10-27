@@ -12,6 +12,7 @@ local _actions = require('telescope._extensions.termfinder.actions')
 local M = {}
 
 local config = {
+    start_to_insert = false,
     mappings = {
         rename_term = '<C-r>',
         delete_term = '<C-x>',
@@ -41,6 +42,9 @@ M.termfinder = function(opts)
 
             local refresh_terms = function()
                 local picker = action_state.get_current_picker(prompt_bufnr)
+                if not picker then
+                  return
+                end
                 local finder = _finder.term_finder(opts, _util.get_terms())
                 picker:refresh(finder, { reset_prompt = true })
             end
@@ -53,7 +57,7 @@ M.termfinder = function(opts)
             map('i', config.mappings.vertical_term, _actions.open_term_vertical)
             map('i', config.mappings.horizontal_term, _actions.open_term_horizontal)
             map('i', config.mappings.float_term, _actions.open_term_float)
-            map('i', '<CR>', _actions.select_term)
+            map('i', '<CR>', function(prompt_bufnr) _actions.select_term(prompt_bufnr, config.start_to_insert) end)
 
             -- actions.select_default:replace(on_term_selected)
             return true
