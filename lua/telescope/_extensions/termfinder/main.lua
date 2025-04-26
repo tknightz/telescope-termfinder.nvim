@@ -29,11 +29,14 @@ M.setup = function(opts)
 end
 
 M.termfinder = function(opts)
+    local terms = _util.get_terms()
+    local last_term = _util.get_last_term()
+
     pickers.new(opts, {
         prompt_title = "ToggleTerm",
         results_title = "Terms",
         sorter = conf.file_sorter(opts),
-        finder = _finder.term_finder(opts, _util.get_terms()),
+        finder = _finder.term_finder(opts, terms),
         previewer = conf.grep_previewer(opts),
         attach_mappings = function(prompt_bufnr, map)
             local on_term_selected = function()
@@ -45,7 +48,7 @@ M.termfinder = function(opts)
                 if not picker then
                   return
                 end
-                local finder = _finder.term_finder(opts, _util.get_terms())
+                local finder = _finder.term_finder(opts, terms)
                 picker:refresh(finder, { reset_prompt = true })
             end
 
@@ -62,6 +65,15 @@ M.termfinder = function(opts)
             -- actions.select_default:replace(on_term_selected)
             return true
         end,
+        on_complete = {
+            function(self)
+                if #terms == 0 then return end
+
+                local index = _util.get_selection_index(terms, last_term)
+                -- set_selection expects a row index (1-based)
+                self:set_selection(self:get_row(index))
+            end,
+        },
     }):find()
 end
 

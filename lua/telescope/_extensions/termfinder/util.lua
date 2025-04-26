@@ -36,6 +36,29 @@ M.get_term_id_by_bufnr = function(bufnr)
     return nil
 end
 
+M.get_last_term = function ()
+    local last_term = toggleterm.get(vim.b.toggle_number)
+    if not last_term then
+        last_term = toggleterm.get_last_focused()
+    end
+    return last_term
+end
+
+M.get_selection_index = function (results, last_choice)
+    if (not results) or (not last_choice)  then
+        return 1  -- fallback to the first item
+    end
+    print("query", vim.inspect(last_choice))
+
+    for i, entry in ipairs(results) do
+        if entry.id == last_choice.id then
+            print("index:", i)
+            return i
+        end
+    end
+    return 1 -- fallback to the first item
+end
+
 M.str_split = function(inputstr, sep)
     if sep == nil then
         sep = "%s"
