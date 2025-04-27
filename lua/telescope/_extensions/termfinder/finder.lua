@@ -1,7 +1,7 @@
 local finders = require('telescope.finders')
 local entry_display = require('telescope.pickers.entry_display')
 local previewer_utils = require('telescope.previewers.utils')
-
+local _util = require('telescope._extensions.termfinder.util')
 
 local M = {}
 
@@ -23,23 +23,25 @@ M.term_finder =  function(opts, terms)
     local displayer = entry_display.create({
         separator = " ",
         items = {
-            { width = 40 },
-            { width = 18 },
+            { width = 100 },
+            { width = 17 },
             { remaining = true },
         },
     })
 
     local make_display = function(entry)
         return displayer({
-            entry.id .. "\t| " ..entry.name,
+            entry.id .. "\t| " ..entry.name .. "\t| " .. entry.term_cwd,
         })
     end
 
     return finders.new_table {
         results = terms,
         entry_maker = function(term)
+            local term_title_parts = _util.str_split(vim.fn.getbufvar(term.bufnr, 'term_title'), ':')
+            term.term_cwd = #term_title_parts > 1 and term_title_parts[2] or ''
             term.value = term.id
-            term.ordinal = term.name
+            term.ordinal = term.name .. term.term_cwd
             term.display = make_display
             term.preview_command = show_preview
             return term
