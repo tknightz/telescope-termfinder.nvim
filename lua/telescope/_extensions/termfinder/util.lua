@@ -48,11 +48,9 @@ M.get_selection_index = function (results, last_choice)
     if (not results) or (not last_choice)  then
         return 1  -- fallback to the first item
     end
-    print("query", vim.inspect(last_choice))
 
     for i, entry in ipairs(results) do
         if entry.id == last_choice.id then
-            print("index:", i)
             return i
         end
     end
